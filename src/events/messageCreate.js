@@ -37,6 +37,35 @@ export default {
 
       await handlePrefixCommand(message, client);
 
+      async execute(message, client) {
+  try {
+    if (message.author.bot || !message.guild) return;
+
+    const content = message.content.toLowerCase().trim();
+
+    if (content === 'hi' || content === 'hello' || content === 'hey') {
+      await message.reply(
+        'Hello! 👋 I am your server bot. Type `/help` to see my commands.'
+      );
+      return;
+    }
+
+    if (content.includes('who are you')) {
+      await message.reply(
+        'I am your server assistant. I can help with commands, moderation, leveling, and more!'
+      );
+      return;
+    }
+
+    if (content === 'how are you') {
+      await message.reply('I am doing great and ready to help! 🚀');
+      return;
+    }
+
+    logger.debug(`Message received from ${message.author.tag}: ${message.content}`);
+
+    const countingProcessed = await handleCounting(message, client);
+
       await handleLeveling(message, client);
     } catch (error) {
       logger.error('Error in messageCreate event:', error);
